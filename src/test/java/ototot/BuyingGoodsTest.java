@@ -1,11 +1,8 @@
 package ototot;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -23,12 +20,12 @@ public class BuyingGoodsTest {
         options.addArguments("start-maximized");
         DriverWraper.configureDriver();
         driver = new ChromeDriver(options);
-        driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get("https://27.ua");
     }
 
 
-    //@AfterTest
+    @AfterTest
     public void postCondition() {
         driver.quit();
     }
@@ -48,17 +45,24 @@ public class BuyingGoodsTest {
         driver.findElement(By.cssSelector("input#ORDER_PROP_7")).sendKeys(PHONE_NUM);
         driver.findElement(By.cssSelector("input#ORDER_PROP_8")).sendKeys(E_MAIL);
 
+        // radio button delivery terms
 
+        WebElement deliveryInTime = driver.findElement(By.cssSelector("input#ID_DELIVERY_ID_33"));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].setAttribute('checked','')", deliveryInTime);
+        // radio button payment terms
+        final WebElement PAYMENT_WITH_VISA_SITE = driver.findElement(By.cssSelector("input#ID_PAY_SYSTEM_ID_9"));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].setAttribute('checked','')", PAYMENT_WITH_VISA_SITE);
+        //driver.findElement(By.cssSelector())
 
 
     }
 
-protected static final String NAME = "Name";
-protected static final String E_MAIL = "test@test.com";
-protected static final String PHONE_NUM = getPhoneNum();
+    protected static final String NAME = "Name";
+    protected static final String E_MAIL = "test@test.com";
+    protected static final String PHONE_NUM = getPhoneNum();
 
     public static String getPhoneNum() {
 
-        return String.valueOf(Math.round(Math.random()*1000000000));
+        return String.valueOf(Math.round(Math.random() * 1000000000));
     }
 }

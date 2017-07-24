@@ -1,6 +1,5 @@
 package ototot.Utils;
 
-import ototot.HeaderPO;
 
 public class DriverWraper {
     public static void configureDriver(){
